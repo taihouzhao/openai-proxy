@@ -8,6 +8,7 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 import handleRequest from "./handle-request";
+import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
 export interface Env {
   // Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
@@ -29,3 +30,5 @@ export default {
     return handleRequest(request);
   },
 };
+ 
+injectSpeedInsights();
