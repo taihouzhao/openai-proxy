@@ -25,11 +25,17 @@ export default async function handleRequest(req: Request & { nextUrl?: URL }) {
   }
 
   const targetUrl = req.headers.get("x-target-url") || "https://api.openai.com";
-
-
   const { pathname, search } = req.nextUrl ? req.nextUrl : new URL(req.url);
+
+  if (pathname === "/") {
+    return Response.redirect("https://english.news.cn/", 302);
+  }
+
   const url = targetUrl + pathname + search;
   const headers = pickHeaders(req.headers, ["content-type", "authorization"]);
+
+  console.log(`Forwarding request to ${url}`);
+
   const res = await fetch(url, {
     body: req.body,
     method: req.method,
