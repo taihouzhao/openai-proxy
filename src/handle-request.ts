@@ -42,12 +42,17 @@ export default async function handleRequest(req: Request & { nextUrl?: URL }) {
     headers,
   });
 
+  if (!res.ok) {
+    return Response.redirect("https://english.news.cn/", 302);
+  }
+
   const resHeaders = {
     ...CORS_HEADERS,
     ...Object.fromEntries(
       pickHeaders(res.headers, ["content-type", /^x-ratelimit-/, /^openai-/])
     ),
   };
+
 
   return new Response(res.body, {
     headers: resHeaders,
