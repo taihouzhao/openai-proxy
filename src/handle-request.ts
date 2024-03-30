@@ -24,10 +24,12 @@ export default async function handleRequest(req: Request & { nextUrl?: URL }) {
     });
   }
 
-  const { pathname, search } = req.nextUrl ? req.nextUrl : new URL(req.url);
-  const url = new URL(pathname + search, "https://api.openai.com").href;
-  const headers = pickHeaders(req.headers, ["content-type", "authorization"]);
+  const targetUrl = req.headers.get("x-target-url") || "https://api.openai.com";
 
+
+  const { pathname, search } = req.nextUrl ? req.nextUrl : new URL(req.url);
+  const url = targetUrl + pathname + search;
+  const headers = pickHeaders(req.headers, ["content-type", "authorization"]);
   const res = await fetch(url, {
     body: req.body,
     method: req.method,
@@ -46,3 +48,4 @@ export default async function handleRequest(req: Request & { nextUrl?: URL }) {
     status: res.status
   });
 }
+
