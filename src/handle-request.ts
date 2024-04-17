@@ -24,7 +24,7 @@ export default async function handleRequest(req: Request & { nextUrl?: URL }) {
     });
   }
 
-  const targetUrl = req.headers.get("x-target-url") || "https://api.groq.com/openai/v1";
+  const targetUrl = req.headers.get("x-target-url") || "https://api.groq.com";
   const { pathname, search } = req.nextUrl ? req.nextUrl : new URL(req.url);
 
   if (pathname === "/") {
