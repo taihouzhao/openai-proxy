@@ -31,7 +31,7 @@ export default async function handleRequest(req: Request & { nextUrl?: URL }) {
     return Response.redirect("https://english.news.cn/", 302);
   }
 
-  const url = targetUrl + pathname + search;
+  const url = targetUrl + pathname;
   const headers = pickHeaders(req.headers, ["content-type", "authorization"]);
 
   console.log(`Forwarding request to ${url}`);
@@ -43,6 +43,7 @@ export default async function handleRequest(req: Request & { nextUrl?: URL }) {
   });
 
   if (!res.ok) {
+    console.error(res);
     return Response.redirect("https://english.news.cn/", 302);
   }
 
