@@ -42,10 +42,6 @@ export default async function handleRequest(req: Request & { nextUrl?: URL }) {
     headers,
   });
 
-  if (!res.ok) {
-    console.error(res);
-    return Response.redirect("https://english.news.cn/", 302);
-  }
 
   const resHeaders = {
     ...CORS_HEADERS,
